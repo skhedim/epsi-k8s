@@ -4,7 +4,7 @@
 
 Connect into your VM, and install docker with the following commands:
 
-```sh
+```bash
 sudo apt-get update
 sudo apt-get install -y docker.io
 sudo usermod -aG docker vagrant
@@ -12,7 +12,7 @@ sudo usermod -aG docker vagrant
 
 Once you are done installing Docker, test your Docker installation by running the following:
 
-```sh
+```bash
 docker run hello-world
 Unable to find image 'hello-world:latest' locally
 latest: Pulling from library/hello-world
@@ -25,13 +25,15 @@ Hello from Docker.
 This message shows that your installation appears to be working correctly.
 ```
 
+> If it doesn't work restart your shell
+
 ## Running your first container
 
 Now that you have everything setup, it's time to get our hands dirty. In this section, you are going to run an [Alpine Linux](http://www.alpinelinux.org/) container (a lightweight linux distribution) on your system and get a taste of the `docker run` command.
 
 To get started, let's run the following in our terminal:
 
-```sh
+```bash
 docker pull alpine
 ```
 
@@ -45,6 +47,7 @@ hello-world             latest              690ed74de00f        5 months ago    
 ```
 
 ### Docker Run
+
 Great! Let's now run a Docker **container** based on this image. To do that you are going to use the `docker run` command.
 
 ```sh
@@ -70,20 +73,21 @@ When you run `docker run alpine`, you provided a command (`ls -l`), so Docker st
 Let's try something more exciting.
 
 ```sh
-$ docker run alpine echo "hello from alpine"
+docker run alpine echo "hello from alpine"
 hello from alpine
 ```
+
 OK, that's some actual output. In this case, the Docker client dutifully ran the `echo` command in our alpine container and then exited it. If you've noticed, all of that happened pretty quickly. Imagine booting up a virtual machine, running a command and then killing it. Now you know why they say containers are fast!
 
 Try another command.
+
 ```sh
-$ docker run alpine /bin/sh
+docker run alpine /bin/sh
 ```
 
-Wait, nothing happened! Is that a bug? Well, no. These interactive shells will exit after running any scripted commands, unless they are run in an interactive terminal - so for this example to not exit, you need to `docker run -it alpine /bin/sh`.
+Wait, nothing happened! Is that a bug? Well, no. These interactive shells will exit after running any scripted commands, unless they are run in an interactive terminal so for this example to not exit, you need to `docker run -it alpine /bin/sh`.
 
 You are now inside the container shell and you can try out a few commands like `ls -l`, `uname -a` and others. Exit out of the container by giving the `exit` command.
-
 
 Ok, now it's time to see the `docker ps` command. The `docker ps` command shows you all containers that are currently running.
 
@@ -94,7 +98,7 @@ CONTAINER ID        IMAGE               COMMAND             CREATED             
 
 Since no containers are running, you see a blank line. Let's try a more useful variant: `docker ps -a`
 
-```
+```sh
 $ docker ps -a
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                      PORTS               NAMES
 36171a5da744        alpine              "/bin/sh"                5 minutes ago       Exited (0) 2 minutes ago                        fervent_newton
@@ -105,18 +109,20 @@ c317d0a9e3d2        hello-world         "/hello"                 34 seconds ago 
 
 What you see above is a list of all containers that you ran. Notice that the `STATUS` column shows that these containers exited a few minutes ago. You're probably wondering if there is a way to run more than just one command in a container. Let's try that now:
 
-```
+```sh
 $ docker run -it alpine /bin/sh
 / # ls
 bin      dev      etc      home     lib      linuxrc  media    mnt      proc     root     run      sbin     sys      tmp      usr      var
 / # uname -a
 Linux 97916e8cb5dc 4.4.27-moby #1 SMP Wed Oct 26 14:01:48 UTC 2016 x86_64 Linux
 ```
+
 Running the `run` command with the `-it` flags attaches us to an interactive tty in the container. Now you can run as many commands in the container as you want. Take some time to run your favorite commands.
 
 That concludes a whirlwind tour of the `docker run` command which would most likely be the command you'll use most often. It makes sense to spend some time getting comfortable with it. To find out more about `run`, use `docker run --help` to see a list of all flags it supports. As you proceed further, we'll see a few more variants of `docker run`.
 
 ### Terminology
+
 In the last section, you saw a lot of Docker-specific jargon which might be confusing to some. So before you go further, let's clarify some terminology that is used frequently in the Docker ecosystem.
 
 - *Images* - The file system and configuration of our application which are used to create containers. To find out more about a Docker image, run `docker inspect alpine`. In the demo above, you used the `docker pull` command to download the **alpine** image. When you executed the command `docker run hello-world`, it also did a `docker pull` behind the scenes to download the **hello-world** image.
@@ -132,7 +138,7 @@ In the last section, you saw a lot of Docker-specific jargon which might be conf
 
 Great! So you have now looked at `docker run`, played with a Docker container and also got the hang of some terminology. Armed with all this knowledge, you are now ready to get to the real stuff &#8212; deploying web applications with Docker.
 
-### 2.1 Run a static website in a container
+### Run a static website in a container
 
 >**Note:** Code for this section is in this repo in the [static-site directory]([static-site](https://github.com/skhedim/epsi-k8s/blob/master/docker/static-site/)).
 
@@ -236,7 +242,7 @@ Above is a list of images that I've pulled from the registry and those I've crea
 For example you could pull a specific version of `ubuntu` image as follows:
 
 ```bash
-$ docker pull ubuntu:12.04
+docker pull ubuntu:12.04
 ```
 
 If you do not specify the version number of the image then, as mentioned, the Docker client will default to a version named `latest`.
@@ -244,7 +250,7 @@ If you do not specify the version number of the image then, as mentioned, the Do
 So for example, the `docker pull` command given below will pull an image named `ubuntu:latest`:
 
 ```bash
-$ docker pull ubuntu
+docker pull ubuntu
 ```
 
 To get a new Docker image you can either get it from a registry (such as the Docker Store) or create your own. There are hundreds of thousands of images available on [Docker Store](https://store.docker.com). You can also search for images directly from the command line using `docker search`.
@@ -275,7 +281,7 @@ We'll do this by first pulling together the components for a random cat picture 
 
 For the purposes of this workshop, we've created a fun little Python Flask app that displays a random cat `.gif` every time it is loaded - because, you know, who doesn't like cats?
 
-### 2.3.2 Write a Dockerfile
+### Write a Dockerfile
 
 We want to create a Docker image with this web app. As mentioned above, all user images are based on a _base image_. Since our application is written in Python, we will build our own Python image based on [Alpine](https://store.docker.com/images/alpine). We'll do that using a **Dockerfile**.
 
@@ -285,13 +291,13 @@ A [Dockerfile](https://docs.docker.com/engine/reference/builder/) is a text file
 
   We'll start by specifying our base image, using the `FROM` keyword:
 
-  ```
+  ```dockerfile
   FROM alpine:3.5
   ```
 
 2. The next step usually is to write the commands of copying the files and installing the dependencies. But first we will install the Python pip package to the alpine linux distribution. This will not just install the pip package but any other dependencies too, which includes the python interpreter. Add the following [RUN](https://docs.docker.com/engine/reference/builder/#run) command next:
 
-  ```
+  ```dockerfile
   RUN apk add --update py2-pip
   ```
 
@@ -299,27 +305,27 @@ A [Dockerfile](https://docs.docker.com/engine/reference/builder/) is a text file
 
   Install all Python requirements for our app to run. This will be accomplished by adding the lines:
 
-  ```
+  ```dockerfile
   COPY requirements.txt /usr/src/app/
   RUN pip install --no-cache-dir -r /usr/src/app/requirements.txt
   ```
 
   Copy the files you have created earlier into our image by using [COPY](https://docs.docker.com/engine/reference/builder/#copy)  command.
 
-  ```
+  ```dockerfile
   COPY app.py /usr/src/app/
   COPY templates/index.html /usr/src/app/templates/
   ```
 
 4. Specify the port number which needs to be exposed. Since our flask app is running on `5000` that's what we'll expose.
 
-  ```
+  ```dockerfile
   EXPOSE 5000
   ```
 
 5. The last step is the command for running the application which is simply - `python ./app.py`. Use the [CMD](https://docs.docker.com/engine/reference/builder/#cmd) command to do that:
 
-  ```
+  ```dockerfile
   CMD ["python", "/usr/src/app/app.py"]
   ```
 
@@ -329,7 +335,7 @@ A [Dockerfile](https://docs.docker.com/engine/reference/builder/) is a text file
 
   Our `Dockerfile` is now ready. This is how it looks:
 
-  ```
+  ```dockerfile
   # our base image
   FROM alpine:3.5
 
@@ -351,7 +357,7 @@ A [Dockerfile](https://docs.docker.com/engine/reference/builder/) is a text file
   CMD ["python", "/usr/src/app/app.py"]
   ```
 
-### 2.3.3 Build the image
+### Build the image
 
 Now that you have your `Dockerfile`, you can build your image. The `docker build` command does the heavy-lifting of creating a docker image from a `Dockerfile`.
 
@@ -438,7 +444,7 @@ $ docker run -p 30000:5000 --name myfirstapp YOUR_USERNAME/myfirstapp
 
 Head over to `http://localhost:8080` and your app should be live. Hit the Refresh button in the web browser to see a few more cat images.
 
-### 2.3.4 Push your image
+### Push your image
 
 Now that you've created and tested your image, you can push it to [Docker Cloud](https://cloud.docker.com).
 
@@ -461,10 +467,10 @@ Now that you are done with this container, stop and remove it since you won't be
 Open another terminal window and execute the following commands:
 
 ```bash
-$ docker rm -f myfirstapp
+docker rm -f myfirstapp
 ```
 
-### 2.3.5 Dockerfile commands summary
+### Dockerfile commands summary
 
 Here's a quick summary of the few basic commands we used in our Dockerfile.
 

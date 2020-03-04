@@ -6,11 +6,11 @@ Kubectl is a command line interface for running commands against Kubernetes clus
 
 ### Docker CLI:
 
-```
+```sh
 docker run -d --restart=always -e DOMAIN=cluster --name nginx-app -p 80:80 nginx
 ```
 
-```
+```sh
 [node4 ~]$ docker exec -it 9dc env
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 HOSTNAME=9dc0816328dcTERM=xterm
@@ -116,13 +116,13 @@ kubectl attach -it nginx-app-5jyvm
 
 ### Docker CLI
 
-```
+```sh
 docker ps
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                NAMES
 55c103fa1296        nginx               "nginx -g 'daemon of…"   6 minutes ago       Up 6 minutes        0.0.0.0:80->80/tcp   nginx-app
 ```
 
-```
+```sh
 docker exec 55c103fa1296 cat /etc/hostname
 55c103fa1296
 ```

@@ -1,4 +1,4 @@
-# Deployment 101
+# Deployments
 
 We looked at ReplicaSets earlier. However, ReplicaSet have one major drawback:
 once you select the pods that are managed by a ReplicaSet, you cannot change their pod templates.

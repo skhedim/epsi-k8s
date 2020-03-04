@@ -10,10 +10,10 @@ All necessary programs are compatible with Windows, Linux or MacOS. The document
 
 You will need to download and install the following programs to set up the lab environment:
 
-Vagrant: https://www.vagrantup.com/downloads.html
-VirtualBox: https://www.virtualbox.org/wiki/Downloads
-Visual Studio Code (optional): https://code.visualstudio.com/download
-OpenSSH Server (Windows): https://docs.microsoft.com/en-us/windows-server/administration/openssh/openssh_install_firstuse
+- Vagrant: https://www.vagrantup.com/downloads.html
+- VirtualBox: https://www.virtualbox.org/wiki/Downloads
+- Visual Studio Code (optional): https://code.visualstudio.com/download
+- OpenSSH Server (Windows): https://docs.microsoft.com/en-us/windows-server/administration/openssh/openssh_install_firstuse
 
 ## Deploy Ubuntu VM
 
@@ -25,8 +25,11 @@ vagrant init ubuntu/bionic64
 
 Edit the Vagrantfile, and add the following line at the end of the file.
 
-```yaml
- config.vm.network :forwarded_port, guest: 30000, host: 8080
+```bash
+config.vm.network :forwarded_port, guest: 30000, host: 8080
+config.vm.provider "virtualbox" do |vb|
+  vb.memory = "2048"
+end
 ```
 
 Finally start the VM creation with the follwing command:
@@ -41,7 +44,7 @@ Once the command is finished you should be able to retrieve the configuration of
 vagrant ssh-config > "%HOMEPATH%\.ssh\config"
 ```
 
-Maintenant vous devriez pouvoir vous connecter en SSH à la VM en utilisant la commande: 
+Now you should be able to SSH connect to the VM using the command:
 
 ```powershell
 ssh default
@@ -54,5 +57,6 @@ vagrant@ubuntu-bionic:~$
 
 It is possible to use visual studio code in a VM. The interest is that you can edit your YAML and Dockerfile more easily and also take advantage of the kuberentes and Docker extensions proposed by VSC.
 
-Just follow this tutorial to install the extension, then just choose default in the menu to connect you VSC into the Ubun VM
+Just follow this tutorial to install the extension, then just choose default in the menu to connect you VSC into the Ubuntu VM.
 
+[Visual Studio Code SSH Remote Access](https://code.visualstudio.com/blogs/2019/07/25/remote-ssh#_connect-using-remote-ssh)

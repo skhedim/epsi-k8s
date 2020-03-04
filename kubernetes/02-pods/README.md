@@ -93,8 +93,7 @@ $ kubectl get po -o wide
 No resources found.
 ```
 
-
-# Ading a 2nd container to a Pod
+## Adding a second container to a Pod
 
 In the microservices architecture, each module should live in its own space and communicate with other modules following a set of rules. But, sometimes we need to deviate a little from this principle. 
 
@@ -107,7 +106,7 @@ Let us see  how a pod can host more than one container. Let’s take a look to t
 Run the following command:
 
 ```sh
-$ kubectl apply -f pods02.yaml
+kubectl apply -f pods02.yaml
 ```
 
 ```sh
@@ -115,8 +114,8 @@ $ kubectl get po -o wide
 NAME        READY   STATUS              RESTARTS   AGE   IP       NODE                                                NOMINATED NODE   READINESS GATES
 webserver   0/2     ContainerCreating   0          13s   <none>   gke-standard-cluster-1-default-pool-78257330-5hs8   <none>           <none>
  ```
- 
- ```sh
+
+```sh
 $ kubectl get po,svc,deploy
 NAME            READY   STATUS    RESTARTS   AGE
 pod/webserver   2/2     Running   0          3m6s
@@ -124,17 +123,16 @@ NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
 service/kubernetes   ClusterIP   10.12.0.1    <none>        443/TCP   107m
 ```
 
-
 ```sh
 $ kubectl get po -o wide
 NAME        READY   STATUS    RESTARTS   AGE     IP         NODE                                                NOMINATED NODE   READINESS GATES
 webserver   2/2     Running   0          3m37s   10.8.0.5   gke-standard-cluster-1-default-pool-78257330-5hs8   <none>           <none>
 ```
 
-## How to verify 2 containers are running inside a Pod?
+## How to verify two containers are running inside a Pod?
 
 ```sh
-$ kubectl describe po
+kubectl describe po
 ```
 
 ```sh
@@ -189,7 +187,7 @@ root@webserver:/# exit
 kubectl delete -f pods02.yaml
 ```
 
-# Example of Multi-Container Pod
+## Example of Multi-Container Pod
 
 Let's talk about communication between containers in a Pod. Having multiple containers in a single Pod makes it relatively straightforward for them to communicate with each other. They can do this using several different methods.
 
@@ -230,7 +228,7 @@ Name:         mc1
 Namespace:    default
 Node:         gke-k8s-lab1-default-pool-fd9ef5ad-pc18/10.140.0.16
 Start Time:   Wed, 08 Jan 2020 14:29:08 +0530
-...        
+...
 Containers:
   1st:
     Container ID:   docker://b08eb646f90f981cd36c605bf8fead3ca62178c7863598fd4558cb026ed067dd

@@ -79,10 +79,10 @@ The first part of the command will get all the pod information, which may be too
 ```yaml
 ownerReferences:
   - apiVersion: extensions/v1beta1
-	blockOwnerDeletion: true
-	controller: true
-	kind: ReplicaSet
-	name: web
+    blockOwnerDeletion: true
+    controller: true
+    kind: ReplicaSet
+    name: web
 ```
 
 ## Removing a Pod From a ReplicaSet
@@ -127,11 +127,11 @@ kind: Pod
 metadata:
   name: orphan
   labels:
-	role: web
+    role: web
 spec:
   containers:
   - name: orphan
-	image: httpd
+    image: httpd
 ```
 
 It looks a lot like the other pods, but it is using Apache (httpd) instead of Nginx for an image. Using kubectl, we can apply this definition like:
