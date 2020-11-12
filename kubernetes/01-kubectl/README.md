@@ -52,6 +52,7 @@ deployment.extensions/portainer   1/1     1            1           49m
 ```
 
 ```sh
+kubectl port-forward svc/nginx-http 8081:80
 curl 10.108.29.166:80
 <!DOCTYPE html>
 <html>
