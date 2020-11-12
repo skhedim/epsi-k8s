@@ -7,7 +7,7 @@ Kubectl is a command line interface for running commands against Kubernetes clus
 ### Docker CLI:
 
 ```sh
-docker run -d --restart=always -e DOMAIN=cluster --name nginx-app -p 80:80 nginx
+docker run -d --restart=always -e DOMAIN=cluster --name nginx-app -p 8080:80 nginx
 ```
 
 ```sh
@@ -26,7 +26,7 @@ HOME=/root
 Start the pod running nginx
 
 ```sh
-kubectl run --image=nginx nginx-app --port=80 --env="DOMAIN=cluster"
+kubectl create deployment nginx-app --image=nginx nginx-app --port=80
 ```
 
 Expose a port through with a service
