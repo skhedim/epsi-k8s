@@ -26,7 +26,7 @@ HOME=/root
 Start the pod running nginx
 
 ```sh
-kubectl create deployment nginx-app --image=nginx nginx-app --port=80
+kubectl create deployment nginx-app --image=nginx --port=80
 ```
 
 Expose a port through with a service
