@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: srvnginx
+  namespace: cleflao
+  labels:
+    run: srvnginx
+spec:
+  ports:
+  - port: 80
+    nodePort: 25000
+    protocol: TCP
+  selector:
+    run: srvnginx
+  type: NodePort
