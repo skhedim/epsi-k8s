@@ -39,8 +39,8 @@ They let you send a request from outside the Kubernetes cluster to a service ins
 git clone https://github.com/skhedim/epsi-k8s
 cd kubernetes/06-ingress
 curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
-helm repo add stable https://kubernetes-charts.storage.googleapis.com
-helm install nginx-ingress stable/nginx-ingress -f values.yaml
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+helm install nginx-ingress ingress-nginx/ingress-nginx -f values.yaml
 ```
  
  - Then, enable the ingress add-on for Minikube
