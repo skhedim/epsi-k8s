@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+  labels:
+    service: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: postgres
+  template:
+    metadata:
+      labels:
+        service: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:13.3
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 150m
+              memory: 256Mi
+          livenessProbe:
+            tcpSocket:
+              port: 5432
+          readinessProbe:
+            tcpSocket:
+              port: 5432
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              value: dbtest
+            - name: POSTGRES_USER
+              value: sebastien
+            - name: POSTGRES_PASSWORD
+              value: secret
