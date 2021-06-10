@@ -11,3 +11,11 @@ database:
   user: postgres
   password: password
   name: wikijs
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false
+  hostname: 127.0.0.1.nip.io
