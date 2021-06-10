@@ -3,4 +3,11 @@
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
+image: nginx:1.9.2
 
+database:
+  host: postgres
+  port: "5432"
+  user: postgres
+  password: password
+  name: wikijs
