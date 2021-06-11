@@ -61,3 +61,7 @@ Create the name of the service account to use
     {{ default "default" .Values.serviceAccount.name }}
 {{- end -}}
 {{- end -}}
+
+{{- define "wikijs.postgresql.fullname" -}}
+{{ printf "%s-%s" .Release.Name "postgresql"}}
+{{- end -}}
