@@ -1,0 +1,15 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: cleflao-ingress
+  namespace: cleflao
+  annotations:
+    ingress.kubernetes.io/rewrite-target: nginx
+spec:
+  rules:
+  - http:
+      paths:
+        - path: /
+          backend:
+            serviceName: svc-nginx
+            servicePort: 8081
